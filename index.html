@@ -1,0 +1,431 @@
+cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FlexCanvas - A spatial window container and workspace management system for Windows.">
+  <title>FlexCanvas</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0d1117;
+      --panel: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #919ba5;
+      --link: #58a6ff;
+      --accent: #238636;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.75 -apple-system, BlinkMacSystemFont, "Segoe UI",
+            "Noto Sans SC", Arial, sans-serif;
+    }
+
+    .container {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 44px);
+      letter-spacing: -1px;
+    }
+
+    h2 {
+      margin-top: 36px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 23px;
+    }
+
+    h3 { font-size: 18px; }
+
+    p, li { color: var(--text); }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .switch {
+      display: flex;
+      flex-shrink: 0;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+
+    .switch button {
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .switch button[aria-pressed="true"] {
+      background: var(--accent);
+      color: white;
+    }
+
+    .hero {
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .status {
+      padding: 12px 16px;
+      border-left: 3px solid var(--accent);
+      background: var(--panel);
+      color: var(--muted);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+
+    .card h3 { margin-top: 0; }
+    .card p { margin-bottom: 0; }
+
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+      color: var(--link);
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 600px) {
+      .container { padding-top: 28px; }
+      header { align-items: flex-start; flex-direction: column; }
+      .features { grid-template-columns: 1fr; }
+      .hero { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>FlexCanvas</h1>
+      <nav class="switch" aria-label="Language selector">
+        <button type="button" data-language="en" aria-pressed="true">English</button>
+        <button type="button" data-language="zh" aria-pressed="false">简体中文</button>
+      </nav>
+    </header>
+
+    <div id="content-en" lang="en">
+      <section class="hero">
+        <p><strong>FlexCanvas</strong> is a spatial window container and workspace management system for Windows. It hosts real external application windows inside a unified canvas, preserving native interaction while allowing free arrangement, snapping, and window switching.</p>
+        <p>Unlike screenshot-based solutions, FlexCanvas works with real Windows HWNDs. It does not fake application content using screenshots, DWM thumbnails, or video streams.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/valhallalex77-star/FlexCanvas-demo">View Source Code</a>
+          <a class="button" href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/docs/COMPATIBILITY_MATRIX.md">Compatibility Matrix</a>
+        </div>
+      </section>
+
+      <p class="status"><strong>Project status:</strong> S0–S3 implemented and verified. Workspace persistence (S4) and release hardening (S5) are not implemented yet.</p>
+
+      <h2>Highlights</h2>
+      <div class="features">
+        <article class="card">
+          <h3>Real HWND Embedding</h3>
+          <p>Embeds external windows using Win32 <code>SetParent</code>, preserving the information needed to restore their original state.</p>
+        </article>
+        <article class="card">
+          <h3>Safe Recovery</h3>
+          <p>Stores rollback snapshots, supports retry after failures, and does not terminate hosted applications when FlexCanvas closes.</p>
+        </article>
+        <article class="card">
+          <h3>Spatial Canvas</h3>
+          <p>Provides a 4096 × 4096 DIP canvas with geometry overview and native 1:1 window interaction modes.</p>
+        </article>
+        <article class="card">
+          <h3>Snapping Engine</h3>
+          <p>Supports edge alignment, seamless adjacency, and equal-gap snapping with a strict 12 DIP threshold.</p>
+        </article>
+        <article class="card">
+          <h3>Explicit Resize Behavior</h3>
+          <p>Only explicit user actions change a hosted window's real size; external size changes synchronize with the layout.</p>
+        </article>
+        <article class="card">
+          <h3>Non-Fullscreen Focus</h3>
+          <p>Selecting a container raises its host in the Z order without maximizing it or moving other windows.</p>
+        </article>
+      </div>
+
+      <h2>Compatibility Boundary</h2>
+      <ul>
+        <li>The target must be a top-level window using matching Per-Monitor V2 DPI awareness.</li>
+        <li>The target and FlexCanvas must run at the same privilege/integrity level.</li>
+      </ul>
+      <p>Unsupported windows are rejected with errors such as <code>DPI_MISMATCH</code> or <code>ACCESS_DENIED</code>. FlexCanvas does not inject code, bypass UIPI, elevate itself, or kill external processes.</p>
+
+      <h2>Architecture</h2>
+      <pre>FlexCanvas.App              WPF entry, views, canvas, session UI
+FlexCanvas.Application      View models and embedding orchestration
+FlexCanvas.Domain           Layout, snapping, geometry, state machines
+FlexCanvas.Infrastructure   Win32 APIs, embedding, discovery, diagnostics
+tools/Probes                Win32 / WPF / WinForms test applications
+tools/WindowHostProbe       Standalone proof-of-concept host</pre>
+
+      <h2>Requirements</h2>
+      <ul>
+        <li>Windows 10/11 x64</li>
+        <li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET SDK 8.0.426</a>, pinned by <code>global.json</code></li>
+        <li>An interactive desktop session for tests that launch real windows</li>
+      </ul>
+
+      <h2>Build and Test</h2>
+      <pre>dotnet restore FlexCanvas.sln
+dotnet build FlexCanvas.sln -c Release
+dotnet test FlexCanvas.sln -c Release --filter "Category!=NativeIntegration"</pre>
+      <p>Run the full suite, including native integration tests, with:</p>
+      <pre>dotnet test FlexCanvas.sln -c Release</pre>
+
+      <h2>Run</h2>
+      <pre>dotnet run --project src\FlexCanvas.App\FlexCanvas.App.csproj -c Release --no-build</pre>
+      <ol>
+        <li>Open <strong>Window Discovery</strong>, refresh, and select a target window.</li>
+        <li>Click <strong>Check Selected Window</strong> to review compatibility.</li>
+        <li>Use <strong>Embed Selected Window</strong> or <strong>Embed to Canvas (1:1)</strong>.</li>
+        <li>Use <strong>Spatial Canvas</strong> to arrange windows in overview mode and interact in native 1:1 mode.</li>
+        <li>Close FlexCanvas normally to restore hosted windows.</li>
+      </ol>
+
+      <h2>Project Documentation</h2>
+      <ul>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/FlexCanvas_Project_Development_Specification.md">Development Specification</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/TASKS.md">Task Registry</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/ACCEPTANCE.md">Acceptance Criteria</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/CHANGELOG_DEV.md">Development Changelog</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/PROJECT_CONTEXT.md">Project Context</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/TASK_PLAN.md">Phase Plan</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/tree/main/docs">Phase Reports and Architecture Decisions</a></li>
+      </ul>
+
+      <h2>Roadmap</h2>
+      <ul>
+        <li><strong>S4 — Workspaces:</strong> versioned JSON persistence, atomic writes, partial restore.</li>
+        <li><strong>S5 — Hardening:</strong> expanded compatibility coverage, diagnostics export, release build.</li>
+      </ul>
+
+      <h2>License</h2>
+      <p>Released under the <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/LICENSE">MIT License</a>.</p>
+    </div>
+
+    <div id="content-zh" lang="zh-CN" hidden>
+      <section class="hero">
+        <p><strong>FlexCanvas</strong> 是一款面向 Windows 的空间窗口容器与工作区管理系统。它将外部应用程序的真实窗口嵌入统一画布，在保留原生交互能力的同时，支持自由排列、吸附和窗口切换。</p>
+        <p>FlexCanvas 操作的是真实 Windows HWND 窗口，不会使用截图、DWM 缩略图或视频流伪造应用内容。</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/valhallalex77-star/FlexCanvas-demo">查看源代码</a>
+          <a class="button" href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/docs/COMPATIBILITY_MATRIX.md">兼容性矩阵</a>
+        </div>
+      </section>
+
+      <p class="status"><strong>项目状态：</strong>S0–S3 阶段已实现并通过验证。工作区持久化（S4）和发布加固（S5）尚未实现。</p>
+
+      <h2>核心特性</h2>
+      <div class="features">
+        <article class="card">
+          <h3>真实 HWND 嵌入</h3>
+          <p>通过 Win32 <code>SetParent</code> 嵌入外部窗口，并保存恢复窗口原始状态所需的信息。</p>
+        </article>
+        <article class="card">
+          <h3>安全恢复</h3>
+          <p>保存回滚快照，失败时支持重试；关闭 FlexCanvas 不会终止被托管的应用程序。</p>
+        </article>
+        <article class="card">
+          <h3>空间画布</h3>
+          <p>提供 4096 × 4096 DIP 画布，包含几何概览和原生 1:1 窗口交互模式。</p>
+        </article>
+        <article class="card">
+          <h3>吸附引擎</h3>
+          <p>支持边缘对齐、无缝相邻和等间距吸附，严格阈值为 12 DIP。</p>
+        </article>
+        <article class="card">
+          <h3>明确的缩放行为</h3>
+          <p>只有用户显式操作才会改变窗口实际尺寸；外部尺寸变化会同步到布局。</p>
+        </article>
+        <article class="card">
+          <h3>非全屏聚焦</h3>
+          <p>选中容器时提升宿主窗口的 Z 顺序，不会最大化窗口或移动其他窗口。</p>
+        </article>
+      </div>
+
+      <h2>兼容性限制</h2>
+      <ul>
+        <li>目标必须是顶层窗口，并使用与宿主匹配的 Per-Monitor V2 DPI 感知模式。</li>
+        <li>目标应用与 FlexCanvas 必须运行在相同的权限/完整性级别。</li>
+      </ul>
+      <p>不符合条件的窗口会返回 <code>DPI_MISMATCH</code> 或 <code>ACCESS_DENIED</code> 等错误。FlexCanvas 不会注入代码、绕过 UIPI、提升自身权限或终止外部进程。</p>
+
+      <h2>架构</h2>
+      <pre>FlexCanvas.App              WPF 入口、视图、画布、会话 UI
+FlexCanvas.Application      视图模型与嵌入引擎编排
+FlexCanvas.Domain           布局、吸附、几何、状态机
+FlexCanvas.Infrastructure   Win32 API、嵌入、发现、诊断
+tools/Probes                Win32 / WPF / WinForms 测试程序
+tools/WindowHostProbe       独立的概念验证宿主程序</pre>
+
+      <h2>环境要求</h2>
+      <ul>
+        <li>Windows 10/11 x64</li>
+        <li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET SDK 8.0.426</a>，版本由 <code>global.json</code> 固定</li>
+        <li>运行测试时需要可交互的桌面会话，因为测试会启动真实窗口</li>
+      </ul>
+
+      <h2>构建与测试</h2>
+      <pre>dotnet restore FlexCanvas.sln
+dotnet build FlexCanvas.sln -c Release
+dotnet test FlexCanvas.sln -c Release --filter "Category!=NativeIntegration"</pre>
+      <p>运行包含原生集成测试在内的完整测试套件：</p>
+      <pre>dotnet test FlexCanvas.sln -c Release</pre>
+
+      <h2>运行</h2>
+      <pre>dotnet run --project src\FlexCanvas.App\FlexCanvas.App.csproj -c Release --no-build</pre>
+      <ol>
+        <li>打开 <strong>Window Discovery</strong>，刷新并选择目标窗口。</li>
+        <li>点击 <strong>Check Selected Window</strong>，查看兼容性检查结果。</li>
+        <li>使用 <strong>Embed Selected Window</strong> 或 <strong>Embed to Canvas (1:1)</strong> 嵌入窗口。</li>
+        <li>进入 <strong>Spatial Canvas</strong>，在概览模式中排列窗口，在原生 1:1 模式中进行交互。</li>
+        <li>正常关闭 FlexCanvas，恢复被托管的窗口。</li>
+      </ol>
+
+      <h2>项目文档</h2>
+      <ul>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/FlexCanvas_Project_Development_Specification.md">项目开发说明书</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/TASKS.md">任务清单</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/ACCEPTANCE.md">验收标准</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/CHANGELOG_DEV.md">开发变更日志</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/PROJECT_CONTEXT.md">项目上下文</a> / <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/TASK_PLAN.md">阶段计划</a></li>
+        <li><a href="https://github.com/valhallalex77-star/FlexCanvas-demo/tree/main/docs">阶段报告与架构决策记录</a></li>
+      </ul>
+
+      <h2>开发路线图</h2>
+      <ul>
+        <li><strong>S4 — 工作区：</strong>版本化 JSON 持久化、原子写入、部分恢复。</li>
+        <li><strong>S5 — 稳定性加固：</strong>扩展兼容性测试范围、诊断信息导出、发布构建。</li>
+      </ul>
+
+      <h2>许可证</h2>
+      <p>本项目基于 <a href="https://github.com/valhallalex77-star/FlexCanvas-demo/blob/main/LICENSE">MIT License</a> 发布。</p>
+    </div>
+
+    <footer>
+      <a href="https://github.com/valhallalex77-star/FlexCanvas-demo">GitHub Repository</a>
+      <span aria-hidden="true"> · </span>
+      <span id="footer-label">FlexCanvas Project</span>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const english = document.getElementById("content-en");
+      const chinese = document.getElementById("content-zh");
+      const buttons = document.querySelectorAll("[data-language]");
+
+      function setLanguage(language) {
+        const isChinese = language === "zh";
+
+        english.hidden = isChinese;
+        chinese.hidden = !isChinese;
+        document.documentElement.lang = isChinese ? "zh-CN" : "en";
+        document.title = isChinese ? "FlexCanvas — 项目主页" : "FlexCanvas";
+
+        buttons.forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.language === language)
+          );
+        });
+
+        document.getElementById("footer-label").textContent =
+          isChinese ? "FlexCanvas 项目主页" : "FlexCanvas Project";
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setLanguage(button.dataset.language);
+        });
+      });
+
+      setLanguage("en");
+    })();
+  </script>
+</body>
+</html>
+EOF
