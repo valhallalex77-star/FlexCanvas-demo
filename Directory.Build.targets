@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup Condition="('$(OutputType)' == 'WinExe' or '$(OutputType)' == 'Exe') and '$(IsTestProject)' != 'true'">
+    <ApplicationManifest>$(MSBuildThisFileDirectory)app.manifest</ApplicationManifest>
+    <ApplicationManifest Condition="'$(UseWindowsForms)' == 'true'">$(MSBuildThisFileDirectory)app-winforms.manifest</ApplicationManifest>
+  </PropertyGroup>
+</Project>

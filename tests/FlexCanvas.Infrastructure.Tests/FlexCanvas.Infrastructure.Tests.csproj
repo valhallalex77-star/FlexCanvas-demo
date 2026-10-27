@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <ProjectReference Include="../../src/FlexCanvas.Infrastructure/FlexCanvas.Infrastructure.csproj" />
+    <ProjectReference Include="../../tools/Probes/WpfProbe/WpfProbe.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../../tools/Probes/WinFormsProbe/WinFormsProbe.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../../tools/Probes/Win32Probe/Win32Probe.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+</Project>

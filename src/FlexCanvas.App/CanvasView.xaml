@@ -1,0 +1,37 @@
+<UserControl x:Class="FlexCanvas.App.CanvasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Content="-" Command="{Binding ZoomOutCommand}" Padding="12,4" AutomationProperties.AutomationId="CanvasZoomOut" />
+            <Button Content="+" Command="{Binding ZoomInCommand}" Padding="12,4" Margin="6,0" AutomationProperties.AutomationId="CanvasZoomIn" />
+            <Button Content="100% / 原点" Command="{Binding ResetCommand}" Padding="12,4" AutomationProperties.AutomationId="CanvasReset" />
+            <Button x:Name="ModeToggle" Content="模式：总览" Click="OnModeToggleClick" Padding="12,4" Margin="6,0" AutomationProperties.AutomationId="CanvasModeToggle" />
+            <TextBlock Text="{Binding ViewportStatus}" Margin="12,4" AutomationProperties.AutomationId="CanvasViewportStatus" />
+        </StackPanel>
+        <TextBlock DockPanel.Dock="Bottom" Margin="0,8,0,0" TextWrapping="Wrap"
+                   Text="布局总览：矩形仅表示真实会话的原始尺寸，不是窗口内容。缩放只改变视图；原生交互仍在 S2 宿主，画布内交互尚未接入。" />
+        <TextBlock x:Name="OverviewStatus" DockPanel.Dock="Bottom" Margin="0,8,0,0" TextWrapping="Wrap"
+                   Foreground="#8A5A00" Visibility="Collapsed" AutomationProperties.AutomationId="CanvasOmissionStatus" />
+        <Grid>
+            <ScrollViewer x:Name="Viewport" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                          CanContentScroll="False" ScrollChanged="OnScrollChanged"
+                          PreviewMouseDown="OnMouseDown" PreviewMouseMove="OnMouseMove" PreviewMouseUp="OnMouseUp"
+                          LostMouseCapture="OnLostMouseCapture" AutomationProperties.AutomationId="CanvasViewport">
+                <Grid Width="{Binding ScaledExtent}" Height="{Binding ScaledExtent}" Background="#F4F6F8">
+                    <Canvas x:Name="LayoutSurface" Width="4096" Height="4096" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
+                        </Canvas.RenderTransform>
+                        <Border Width="4096" Height="4096" BorderThickness="1" BorderBrush="#B8C4D0" IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="24" Canvas.Top="24" Text="(0, 0) · 画布原点" FontSize="20" Foreground="#526578" IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="24" Canvas.Top="68" Text="4096 × 4096 DIP · 允许重叠 · 容器边界与选择状态将在后续子任务接入"
+                                   Foreground="#526578" IsHitTestVisible="False" />
+                    </Canvas>
+                </Grid>
+            </ScrollViewer>
+            <!-- Native hosts live outside the scroller: HwndHost cannot be clipped by WPF, so clipping is native (host window bounds). -->
+            <Canvas x:Name="NativeOverlay" />
+        </Grid>
+    </DockPanel>
+</UserControl>
