@@ -1,5 +1,7 @@
 # FlexCanvas
 
+**English** | [简体中文](README.zh-CN.md)
+
 **FlexCanvas** is a spatial window container and workspace management system for Windows. It hosts the real windows of external applications inside a unified canvas, preserves genuine native interaction, and lets you freely arrange, snap, and switch between hosted windows — all without faking content with screenshots, DWM thumbnails, or video streams.
 
 > Status: phases S0–S3 are implemented and verified (feasibility POC, discovery, production embedding/recovery, and the spatial canvas). Workspace persistence (S4) and release hardening (S5) are not implemented yet.
@@ -26,7 +28,7 @@ Windows that fail these checks (most legacy Win32 apps, DPI-unaware apps, elevat
 
 ## Architecture
 
-```
+```text
 FlexCanvas.App              WPF entry, views, dual-mode canvas, session UI
 FlexCanvas.Application      View models, embedding engine orchestration, ports
 FlexCanvas.Domain           Pure layout, snapping, geometry projection, state machines
